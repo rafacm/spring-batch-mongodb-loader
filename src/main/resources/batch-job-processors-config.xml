@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:context="http://www.springframework.org/schema/context"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans
+                               http://www.springframework.org/schema/beans/spring-beans.xsd
+                               http://www.springframework.org/schema/context
+                               http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="databaseRowsReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+        <property name="dataSource" ref="originDataSource"/>
+        <property name="sql" value='SELECT * FROM Country'/>
+        <property name="rowMapper">
+            <bean class="casadelhuerto.mongodb.loader.DatabaseRowMapper"/>
+        </property>
+        <property name="fetchSize" value="100"/>
+        <property name="maxRows" value="1000000"/>
+    </bean>
+
+    <bean id="javaMapToDBObjectProcessor" class="casadelhuerto.mongodb.loader.JavaMapToDBObjectProcessor"/>
+
+    <bean id="mongoDbWriter" class="casadelhuerto.mongodb.loader.MongoDbWriter">
+        <property name="collectionName" value="countries"/>
+        <property name="mongoOperations" ref="mongoTemplate"/>
+    </bean>
+</beans>
