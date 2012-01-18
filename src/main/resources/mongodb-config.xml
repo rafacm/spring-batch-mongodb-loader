@@ -23,7 +23,7 @@
 
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg ref="mongodb"/>
-        <constructor-arg name="databaseName" value="ventilador"/>
+        <constructor-arg name="databaseName" value="mondial"/>
         <!-- See http://forum.springsource.org/showthread.php?120325-changes-in-quot-writeConcern-quot-behaviour-in-RC1 -->
         <property name="writeConcern">
             <util:constant static-field="com.mongodb.WriteConcern.SAFE" />
